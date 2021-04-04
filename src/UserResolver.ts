@@ -27,6 +27,10 @@ export class UserResolver {
   users() {
     return User.find();
   }
+  @Query(() => String)
+  bye() {
+    return "bye";
+  }
   @Mutation(() => LoginResponse)
   async login(
     @Arg("email") email: string,
