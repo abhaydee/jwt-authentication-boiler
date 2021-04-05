@@ -6,11 +6,13 @@ import {
   ObjectType,
   Query,
   Resolver,
+  UseMiddleware,
 } from "type-graphql";
 import { User } from "./entity/User";
 import { hash, compare } from "bcryptjs";
 import { MyContext } from "./Mycontext";
 import { createAccessToken, createRefreshToken } from "./auth";
+import { isAuth } from "./IsAuth";
 
 @ObjectType()
 class LoginResponse {
@@ -28,6 +30,7 @@ export class UserResolver {
     return User.find();
   }
   @Query(() => String)
+  @UseMiddleware(isAuth)
   bye() {
     return "bye";
   }
