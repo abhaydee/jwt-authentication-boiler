@@ -13,7 +13,6 @@ import { hash, compare } from "bcryptjs";
 import { MyContext } from "./Mycontext";
 import { createAccessToken, createRefreshToken } from "./auth";
 import { isAuth } from "./IsAuth";
-
 @ObjectType()
 class LoginResponse {
   @Field()
@@ -31,8 +30,8 @@ export class UserResolver {
   }
   @Query(() => String)
   @UseMiddleware(isAuth)
-  bye() {
-    return "bye";
+  bye(@Ctx() { payload }: MyContext) {
+    return `your user id is :${payload!.userId}`;
   }
   @Mutation(() => LoginResponse)
   async login(
@@ -48,6 +47,8 @@ export class UserResolver {
     if (!valid) {
       throw new Error("Bad password");
     }
+    console.log("access-token", process.env.ACCESS_TOKEN_SECRET);
+
     res.cookie("jid", createRefreshToken(user), {
       httpOnly: true,
     });
