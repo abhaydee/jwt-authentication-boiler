@@ -1,7 +1,7 @@
 {
    "type": "postgres",
    "host": "localhost",
-   "port": 5431,
+   "port": 5432,
    "username": "postgres",
    "password": "test",
    "database": "jwt-auth-app",
